@@ -8,15 +8,19 @@ export class UserController {
   public async register(req: Request, res: Response) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      res.status(400).json({ errors: errors.array() });
+      return;
     }
 
     const { name, username } = req.body;
 
     try {
-      
+      const newUser = await this.userService.createUser({ name, username });
+      res.status(201).json(newUser);
+      return;
     } catch (error) {
-
+      res.status(501).json({ error: 'Error registering user' });
+      return;
     }
   }
 }
