@@ -9,10 +9,12 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+app.use(express.json());
+
 // Configuração do CORS para permitir acessos de um domínio específico
 app.use(cors({
-  origin: 'https://bythaissa.com',  // Permitir apenas este domínio
-  methods: 'GET,POST,PUT,DELETE',          // Permitir esses métodos
+  origin: process.env.DOMAIN,   // Permitir apenas este domínio
+  methods: process.env.METHOD,          // Permitir esses métodos
 }));
 
 // Usar o Helmet para proteger a aplicação com cabeçalhos de segurança
