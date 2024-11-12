@@ -20,7 +20,7 @@ app.use(cors({
 // Usar o Helmet para proteger a aplicação com cabeçalhos de segurança
 app.use(helmet());
 
-app.use(router);
+app.use('/syscomment', router);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

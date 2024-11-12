@@ -12,11 +12,11 @@ export const checkUsername = [
     .custom(async (value) => {
       // Verifica se o username já existe no banco de dados
       const existingUser = await userReposity.findUserByUsername(value);
-      
+
       if (existingUser) {
         throw new Error('Username already exist.');
       }
-      
+
       return true; // Se não houver erro, retorna true
     }),
 ];

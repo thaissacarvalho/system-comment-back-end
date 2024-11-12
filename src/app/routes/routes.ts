@@ -5,7 +5,7 @@ import { UserController } from '../controllers/user.controller';
 export const router = Router();
 const userController = new UserController();
 
-router.get('/syscomment', (req, res) => {
+router.get('/', (req, res) => {
   res.send("What's up, bro?");
 });
 
