@@ -9,7 +9,7 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  public async register(req: Request, res: Response) {
+  public async registerUser(req: Request, res: Response) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map(error => error.msg); // Extraímos apenas o campo "msg"

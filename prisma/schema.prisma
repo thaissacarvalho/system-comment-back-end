@@ -20,7 +20,7 @@ model User {
 
 model Post {
   id        Int       @id @default(autoincrement())
-  authorId  Int
+  authorId  Int @unique
   title     String
   text      String?
   createdAt DateTime  @default(now())
