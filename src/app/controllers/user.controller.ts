@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { UserService } from "../services/user.service";
-import { validationResult } from "express-validator";
+import { Request, Response } from 'express';
+import { UserService } from '../services/user.service';
+import { validationResult } from 'express-validator';
 
 export class UserController {
   private userService: UserService;
@@ -12,7 +12,7 @@ export class UserController {
   public async registerUser(req: Request, res: Response) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const errorMessages = errors.array().map(error => error.msg); // Extraímos apenas o campo "msg"
+      const errorMessages = errors.array().map((error) => error.msg); // Extraímos apenas o campo "msg"
       res.status(400).json({ errors: errorMessages });
       return;
     }
@@ -24,7 +24,7 @@ export class UserController {
       res.status(200).json(newUser);
       return;
     } catch (error) {
-      console.error("Error registering user:", error); // Adiciona o log do erro
+      console.error('Error registering user:', error); // Adiciona o log do erro
       res.status(501).json({ error: 'Error registering user' });
     }
   }
@@ -83,12 +83,12 @@ export class UserController {
   public async updateUser(req: Request, res: Response): Promise<void> {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const errorMessages = errors.array().map(error => error.msg); // Extraímos apenas o campo "msg"
+      const errorMessages = errors.array().map((error) => error.msg); // Extraímos apenas o campo "msg"
       res.status(400).json({ errors: errorMessages });
       return;
     }
 
-    const { id } = req.params
+    const { id } = req.params;
     const { name, username } = req.body;
 
     if (!id) {
@@ -98,11 +98,12 @@ export class UserController {
     try {
       const updatedUser = await this.userService.updateUser(Number(id), {
         name: name,
-        username: username
+        username: username,
       });
       res.status(200).json(updatedUser);
     } catch (error) {
-      if (error instanceof Error) { // Verificando se é uma instância de Error
+      if (error instanceof Error) {
+        // Verificando se é uma instância de Error
         res.status(400).json({ message: error.message });
       } else {
         res.status(400).json({ message: 'Erro desconhecido' });
@@ -119,10 +120,10 @@ export class UserController {
 
     try {
       const deletedUser = await this.userService.deleteUser(id);
-      res.status(200).json(deletedUser) ;
+      res.status(200).json(deletedUser);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error deleted user.'})
+      res.status(500).json({ message: 'Error deleted user.' });
     }
   }
 }

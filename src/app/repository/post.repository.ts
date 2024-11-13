@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export class PostRepository {
-  async createPost(data: { authorId: number; title: string, text: string }) {
+  async createPost(data: { authorId: number; title: string; text: string }) {
     return await prisma.post.create({ data });
   }
 

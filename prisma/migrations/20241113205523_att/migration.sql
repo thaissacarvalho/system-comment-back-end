@@ -4,7 +4,8 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updateAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updateAt" TIMESTAMP(3) NOT NULL,
+    "postCount" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -16,7 +17,6 @@ CREATE TABLE "Post" (
     "title" TEXT NOT NULL,
     "text" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updateAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
@@ -26,7 +26,6 @@ CREATE TABLE "Comment" (
     "id" SERIAL NOT NULL,
     "text" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updateAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "postId" INTEGER,
     "parentId" INTEGER,
 
@@ -57,6 +56,9 @@ CREATE TABLE "Deslike" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Post_authorId_key" ON "Post"("authorId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Like_commentId_key" ON "Like"("commentId");

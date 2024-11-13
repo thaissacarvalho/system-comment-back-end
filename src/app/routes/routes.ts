@@ -14,16 +14,36 @@ router.get('/', (req, res) => {
 // USERS
 router.get('/users', userController.findUsers.bind(userController));
 router.get('/users/:id', userController.findUserById.bind(userController));
-router.get('/users/user/:username', userController.findUserByUsername.bind(userController));
-router.post('/users/register', checkUsername, userController.registerUser.bind(userController));
-router.patch('/users/editUser/:id', checkUsername, userController.updateUser.bind(userController));
-router.delete('/users/delete/:id', userController.deleteUser.bind(userController));
+router.get(
+  '/users/user/:username',
+  userController.findUserByUsername.bind(userController)
+);
+router.post(
+  '/users/register',
+  checkUsername,
+  userController.registerUser.bind(userController)
+);
+router.patch(
+  '/users/editUser/:id',
+  checkUsername,
+  userController.updateUser.bind(userController)
+);
+router.delete(
+  '/users/delete/:id',
+  userController.deleteUser.bind(userController)
+);
 
 // POST
 router.get('/posts', postController.findPosts.bind(postController));
 router.get('/posts/:id', postController.findPostById.bind(postController));
-router.post('/posts/register', postController.registerPost.bind(postController));
-router.delete('/posts/delete/:id', postController.deletePost.bind(postController));
+router.post(
+  '/posts/register',
+  postController.registerPost.bind(postController)
+);
+router.delete(
+  '/posts/delete/:id',
+  postController.deletePost.bind(postController)
+);
 
 // COMMENT
 

@@ -1,9 +1,9 @@
-import { PostRepository } from "../repository/post.repository";
+import { PostRepository } from '../repository/post.repository';
 
 const postRepository = new PostRepository();
 
 export class PostService {
-  async createPost(data: { authorId: number; title: string, text: string }) {
+  async createPost(data: { authorId: number; title: string; text: string }) {
     return await postRepository.createPost(data);
   }
 

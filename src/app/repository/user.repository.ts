@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -10,11 +10,40 @@ export class UserRepository {
 
   // Método para encontrar um usuário por ID
   async findUserById(id: string) {
-    return await prisma.user.findUnique({ where: { id: Number(id) } });
-  }
+    return await prisma.user.findUnique({
+      where: {
+        id: Number(id)
+      },
+      include: {
+        posts: true,
+        likes: true,
+        deslikes: true,
+        _count: {
+          select: {
+            posts: true,
+            likes: true,
+            deslikes: true,
+          },
+        }
+      }
+    })
+  };
 
   async findUserByUsername(username: string) {
-    return await prisma.user.findUnique({ where: { username }});
+    return await prisma.user.findUnique({
+      where: { username }, include: {
+        posts: true,
+        likes: true,
+        deslikes: true,
+        _count: {
+          select: {
+            posts: true,
+            likes: true,
+            deslikes: true,
+          },
+        }
+      }
+    });
   }
 
   // Método para listar todos os usuários

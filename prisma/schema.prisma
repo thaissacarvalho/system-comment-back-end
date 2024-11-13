@@ -14,13 +14,14 @@ model User {
   createdAt DateTime  @default(now())
   updateAt  DateTime  @updatedAt
   posts     Post[]
+  postCount Int       @default(0)
   likes     Like[]
-  Deslike   Deslike[]
+  deslikes  Deslike[]
 }
 
 model Post {
   id        Int       @id @default(autoincrement())
-  authorId  Int @unique
+  authorId  Int       @unique
   title     String
   text      String?
   createdAt DateTime  @default(now())
