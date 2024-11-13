@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "./src/infra/index.js",
   "scripts": {
-    "start": "tsc && ts-node src/infra/index.ts",
+    "start": "nodemon -r ts-node/register src/index.ts",
     "build": "tsc",
+    "watch": "nodemon --exec ts-node --watch './src/**/*.ts' src/infra/index.ts",
     "serve": "node dist/src/infra/index.js",
     "lint": "eslint . --c .js, .ts",
     "format": "prettier --write ."
@@ -27,6 +28,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.11.0",
+    "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
     "prisma": "^5.22.0",
     "ts-node": "^10.9.2",

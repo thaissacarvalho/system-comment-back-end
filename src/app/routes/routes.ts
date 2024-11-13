@@ -9,4 +9,9 @@ router.get('/', (req, res) => {
   res.send("What's up, bro?");
 });
 
-router.post('/register', checkUsername, userController.register);
+router.get('/users', userController.findUsers.bind(userController));
+router.get('/users/:id', userController.findUserById.bind(userController));
+router.get('/users/user/:username', userController.findUserByUsername.bind(userController));
+router.post('/users/register', checkUsername, userController.register.bind(userController));
+router.patch('/users/editUser/:id', checkUsername, userController.updateUser.bind(userController));
+router.delete('/users/delete/:id', userController.deleteUser.bind(userController));
