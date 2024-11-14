@@ -2,10 +2,12 @@ import { Router } from 'express';
 import { checkUsername } from '../validations/checkUsername.validations';
 import { UserController } from '../controllers/user.controller';
 import { PostController } from '../controllers/post.controller';
+import { CommentController } from '../controllers/comment.controller';
 
 export const router = Router();
 const userController = new UserController();
 const postController = new PostController();
+const commentController = new CommentController();
 
 router.get('/', (req, res) => {
   res.send("What's up, bro?");
@@ -46,7 +48,16 @@ router.delete(
 );
 
 // COMMENT
-
+router.get('/comments', commentController.findComments.bind(commentController));
+router.get('/comments/:id', commentController.findCommentById.bind(commentController));
+router.post(
+  '/comments/register',
+  commentController.registerComment.bind(commentController)
+);
+router.delete(
+  '/comments/delete/:id',
+  commentController.deleteComment.bind(commentController)
+);
 // LIKE
 
 // DESLIKE
