@@ -8,7 +8,7 @@ export class PostController {
     this.postService = new PostService();
   }
 
-  public async registerPost(req: Request, res: Response): Promise<void> {
+  public async registerPost(req: Request, res: Response): Promise<any> {
     const { authorId, title, text } = req.body;
 
     try {
@@ -17,52 +17,52 @@ export class PostController {
         title,
         text,
       });
-      res.status(200).json(createPost);
+      return res.status(200).json(createPost);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error creating Post.' });
+      return res.status(500).json({ message: 'Error creating Post.' });
     }
   }
 
-  public async findPosts(req: Request, res: Response): Promise<void> {
+  public async findPosts(req: Request, res: Response): Promise<any> {
     try {
       const findMany = await this.postService.findManyPost();
-      res.status(200).json(findMany);
+      return res.status(200).json(findMany);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error in finding all posts.' });
+      return res.status(500).json({ message: 'Error in finding all posts.' });
     }
   }
 
-  public async findPostById(req: Request, res: Response): Promise<void> {
+  public async findPostById(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ message: 'ID is required' });
+      return res.status(400).json({ message: 'ID is required' });
     }
 
     try {
       const findPost = await this.postService.findUserById(id);
-      res.status(200).json(findPost);
+      return res.status(200).json(findPost);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error in finding posts.' });
+      return res.status(500).json({ message: 'Error in finding posts.' });
     }
   }
 
-  public async deletePost(req: Request, res: Response): Promise<void> {
+  public async deletePost(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
 
     if (!id) {
-      res.status(500).json({ message: 'ID is required' });
+      return res.status(500).json({ message: 'ID is required' });
     }
 
     try {
       const deletedPost = await this.postService.deletePost(id);
-      res.status(200).json(deletedPost);
+      return res.status(200).json(deletedPost);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error deleting post' });
+      return res.status(500).json({ message: 'Error deleting post' });
     }
   }
 }

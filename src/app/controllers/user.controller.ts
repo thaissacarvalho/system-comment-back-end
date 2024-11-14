@@ -9,7 +9,7 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  public async registerUser(req: Request, res: Response): Promise<Response> {
+  public async registerUser(req: Request, res: Response): Promise<any> {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg); // Extraímos apenas o campo "msg"
@@ -27,7 +27,7 @@ export class UserController {
     }
   }
 
-  public async findUsers(req: Request, res: Response): Promise<Response> {
+  public async findUsers(req: Request, res: Response): Promise<any> {
     try {
       const returnUsers = await this.userService.findManyUser();
       return res.status(200).json(returnUsers);
@@ -36,7 +36,7 @@ export class UserController {
     }
   }
 
-  public async findUserById(req: Request, res: Response): Promise<Response> {
+  public async findUserById(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
 
     if (!id) {
@@ -57,7 +57,7 @@ export class UserController {
     }
   }
 
-  public async findUserByUsername(req: Request, res: Response): Promise<Response> {
+  public async findUserByUsername(req: Request, res: Response): Promise<any> {
     const { username } = req.params;
 
     // Check if username is provided
@@ -81,7 +81,7 @@ export class UserController {
     }
   }
 
-  public async updateUser(req: Request, res: Response): Promise<Response> {
+  public async updateUser(req: Request, res: Response): Promise<any> {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg); // Extraímos apenas o campo "msg"
@@ -111,7 +111,7 @@ export class UserController {
     }
   }
 
-  public async deleteUser(req: Request, res: Response): Promise<Response> {
+  public async deleteUser(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
 
     if (!id) {
