@@ -12,7 +12,21 @@ export class PostRepository {
   }
 
   async findPostById(id: string) {
-    return await prisma.post.findUnique({ where: { id: Number(id) } });
+    return await prisma.post.findUnique({ where: {
+      id: Number(id)
+    },
+    include: {
+      comments: true,
+      likes: true,
+      deslikes: true,
+      _count: {
+        select: {
+          comments: true,
+          likes: true,
+          deslikes: true,
+        },
+      }
+    } });
   }
 
   async deletePost(id: string) {
