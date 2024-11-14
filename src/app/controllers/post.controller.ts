@@ -42,7 +42,7 @@ export class PostController {
     }
 
     try {
-      const findPost = await this.postService.findUserById(id);
+      const findPost = await this.postService.findPostById(id);
       return res.status(200).json(findPost);
     } catch (error) {
       console.error(error);

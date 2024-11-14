@@ -7,7 +7,7 @@ export class PostService {
     return await postRepository.createPost(data);
   }
 
-  async findUserById(id: string) {
+  async findPostById(id: string) {
     return await postRepository.findPostById(id);
   }
 
