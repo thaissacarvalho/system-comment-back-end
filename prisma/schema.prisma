@@ -14,7 +14,6 @@ model User {
   createdAt DateTime  @default(now())
   updateAt  DateTime  @updatedAt
   posts     Post[]
-  postCount Int       @default(0)
   likes     Like[]
   deslikes  Deslike[]
 }

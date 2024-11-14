@@ -9,90 +9,90 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  public async registerUser(req: Request, res: Response) {
+  public async registerUser(req: Request, res: Response): Promise<Response> {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg); // Extraímos apenas o campo "msg"
-      res.status(400).json({ errors: errorMessages });
-      return;
+      return res.status(400).json({ errors: errorMessages });
     }
 
     const { name, username } = req.body;
 
     try {
       const newUser = await this.userService.createUser({ name, username });
-      res.status(200).json(newUser);
-      return;
+      return res.status(200).json(newUser);
     } catch (error) {
       console.error('Error registering user:', error); // Adiciona o log do erro
-      res.status(501).json({ error: 'Error registering user' });
+      return res.status(501).json({ error: 'Error registering user' });
     }
   }
 
-  public async findUsers(req: Request, res: Response) {
+  public async findUsers(req: Request, res: Response): Promise<Response> {
     try {
       const returnUsers = await this.userService.findManyUser();
-      res.status(200).json(returnUsers);
+      return res.status(200).json(returnUsers);
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   }
 
-  public async findUserById(req: Request, res: Response): Promise<void> {
+  public async findUserById(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     if (!id) {
-      res.status(400).json({ message: 'ID is required.' });
+      return res.status(400).json({ message: 'ID is required.' });
     }
 
     try {
       const userId = await this.userService.findUserById(id);
 
       if (!userId) {
-        res.status(404).json({ message: 'User not found.' });
+        return res.status(404).json({ message: 'User not found.' });
       }
 
-      res.status(200).json(userId);
+      return res.status(200).json(userId);
     } catch (error) {
       console.error('Error occurred while finding userId:', error); // Log do erro
-      res.status(500).json({ message: `Error on servidor` });
+      return res.status(500).json({ message: `Error on servidor` });
     }
   }
 
-  public async findUserByUsername(req: Request, res: Response): Promise<void> {
+  public async findUserByUsername(req: Request, res: Response): Promise<Response> {
     const { username } = req.params;
 
+    // Check if username is provided
     if (!username) {
-      res.status(400).json({ message: 'Username is required.' });
+      return res.status(400).json({ message: 'Username is required.' });
     }
 
     try {
-      const userName = await this.userService.findUserByUsername(username);
+      const findUsername = await this.userService.findUserByUsername(username);
 
-      if (!userName) {
-        res.status(404).json({ message: 'User not found.' });
+      // Check if user exists
+      if (!findUsername) {
+        return res.status(404).json({ message: 'User not found.' });
       }
 
-      res.status(200).json(userName);
+      return res.status(200).json(findUsername);  // Send successful response
+
     } catch (error) {
-      console.error('Error occurred while finding username:', error); // Log do erro
-      res.status(500).json({ message: `Error on servidor` });
+      console.error('Error occurred while finding username:', error); // Log the error
+      return res.status(500).json({ message: 'Error on servidor' });
     }
   }
 
-  public async updateUser(req: Request, res: Response): Promise<void> {
+  public async updateUser(req: Request, res: Response): Promise<Response> {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg); // Extraímos apenas o campo "msg"
-      res.status(400).json({ errors: errorMessages });
-      return;
+      return res.status(400).json({ errors: errorMessages });
     }
 
     const { id } = req.params;
     const { name, username } = req.body;
 
     if (!id) {
-      res.status(404).json({ message: 'ID is required.' });
+      return res.status(404).json({ message: 'ID is required.' });
     }
 
     try {
@@ -100,30 +100,30 @@ export class UserController {
         name: name,
         username: username,
       });
-      res.status(200).json(updatedUser);
+      return res.status(200).json(updatedUser);
     } catch (error) {
       if (error instanceof Error) {
         // Verificando se é uma instância de Error
-        res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message });
       } else {
-        res.status(400).json({ message: 'Erro desconhecido' });
+        return res.status(400).json({ message: 'Erro desconhecido' });
       }
     }
   }
 
-  public async deleteUser(req: Request, res: Response): Promise<void> {
+  public async deleteUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     if (!id) {
-      res.status(404).json({ message: 'ID is required.' });
+      return res.status(404).json({ message: 'ID is required.' });
     }
 
     try {
       const deletedUser = await this.userService.deleteUser(id);
-      res.status(200).json(deletedUser);
+      return res.status(200).json(deletedUser);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error deleted user.' });
+      return res.status(500).json({ message: 'Error deleted user.' });
     }
   }
 }
