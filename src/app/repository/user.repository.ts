@@ -17,12 +17,10 @@ export class UserRepository {
       include: {
         posts: true,
         likes: true,
-        deslikes: true,
         _count: {
           select: {
             posts: true,
             likes: true,
-            deslikes: true,
           },
         }
       }
@@ -34,12 +32,10 @@ export class UserRepository {
       where: { username }, include: {
         posts: true,
         likes: true,
-        deslikes: true,
         _count: {
           select: {
             posts: true,
             likes: true,
-            deslikes: true,
           },
         }
       }

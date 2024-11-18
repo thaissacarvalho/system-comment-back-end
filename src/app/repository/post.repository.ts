@@ -18,12 +18,10 @@ export class PostRepository {
     include: {
       comments: true,
       likes: true,
-      deslikes: true,
       _count: {
         select: {
           comments: true,
           likes: true,
-          deslikes: true,
         },
       }
     } });

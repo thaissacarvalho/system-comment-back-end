@@ -3,11 +3,13 @@ import { checkUsername } from '../validations/checkUsername.validations';
 import { UserController } from '../controllers/user.controller';
 import { PostController } from '../controllers/post.controller';
 import { CommentController } from '../controllers/comment.controller';
+import { LikeController } from '../controllers/like.controller';
 
 export const router = Router();
 const userController = new UserController();
 const postController = new PostController();
 const commentController = new CommentController();
+const likeController = new LikeController();
 
 router.get('/', (req, res) => {
   res.send("What's up, bro?");
@@ -58,6 +60,10 @@ router.delete(
   '/comments/delete/:id',
   commentController.deleteComment.bind(commentController)
 );
-// LIKE
 
-// DESLIKE
+// LIKE
+router.get('/likes', likeController.findManyLike.bind(likeController));
+router.get('/likes/:id', likeController.findLikeById.bind(likeController));
+router.post('/likes/register', likeController.registerLike.bind(likeController));
+router.delete('/likes/delete/:id', likeController.deleteLike.bind(likeController));
+

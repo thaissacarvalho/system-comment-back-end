@@ -15,7 +15,6 @@ model User {
   updateAt  DateTime  @updatedAt
   posts     Post[]
   likes     Like[]
-  deslikes  Deslike[]
 }
 
 model Post {
@@ -27,7 +26,6 @@ model Post {
   author    User      @relation(fields: [authorId], references: [id])
   comments  Comment[]
   likes     Like[]
-  deslikes  Deslike[]
 }
 
 model Comment {
@@ -39,28 +37,18 @@ model Comment {
   parentId  Int?
   parent    Comment?  @relation("CommentToParent", fields: [parentId], references: [id])
   replies   Comment[] @relation("CommentToParent")
-  Like      Like?
-  Deslike   Deslike?
+  Like      Like[]
 }
 
 model Like {
   id        Int      @id @default(autoincrement())
   Comment   Comment  @relation(fields: [commentId], references: [id])
-  commentId Int      @unique
+  commentId Int 
   createdAt DateTime @default(now())
   Post      Post?    @relation(fields: [postId], references: [id])
   postId    Int?
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
-}
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 
-model Deslike {
-  id        Int      @id @default(autoincrement())
-  Comment   Comment  @relation(fields: [commentId], references: [id])
-  commentId Int      @unique
-  createdAt DateTime @default(now())
-  Post      Post?    @relation(fields: [postId], references: [id])
-  postId    Int?
-  User      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  @@unique([userId, commentId]) 
 }

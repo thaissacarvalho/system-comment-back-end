@@ -12,13 +12,13 @@ export class CommentRepository {
       include: {
         replies: true,
         _count: {
-          select: { replies: true }, // Conta o número de replies
+          select: { replies: true, Like: true },
         },
       },
     });
     return comments.map(comment => ({
       ...comment,
-      isParent: !comment.parentId, // Define se é um comentário principal
+      isParent: !comment.parentId,
     }));
   }
 
@@ -28,16 +28,18 @@ export class CommentRepository {
       include: {
         replies: true,
         Like: true,
-        Deslike: true,
         _count: {
-          select: { replies: true }, // Conta o número de replies
+          select: {
+            replies: true,
+            Like: true
+          },
         },
       },
     });
-    if (!comment) return null; // Verifica se o comentário existe
+    if (!comment) return null;
     return {
       ...comment,
-      isParent: !comment.parentId, // Define se é um comentário principal
+      isParent: !comment.parentId,
     };
   }
 
