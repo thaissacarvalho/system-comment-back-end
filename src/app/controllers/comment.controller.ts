@@ -14,7 +14,8 @@ export class CommentController {
     try {
       const createComment = await this.commentService.createComment({
         text,
-        postId, parentId
+        postId, 
+        parentId: parentId ?? false,
       });
       return res.status(200).json(createComment);
     } catch (error) {

@@ -103,7 +103,6 @@ export class UserController {
       return res.status(200).json(updatedUser);
     } catch (error) {
       if (error instanceof Error) {
-        // Verificando se é uma instância de Error
         return res.status(400).json({ message: error.message });
       } else {
         return res.status(400).json({ message: 'Erro desconhecido' });
