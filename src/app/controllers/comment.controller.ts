@@ -9,10 +9,11 @@ export class CommentController {
   }
 
   public async registerComment(req: Request, res: Response): Promise<any> {
-    const { text, postId, parentId } = req.body;
+    const { authorId, text, postId, parentId } = req.body;
 
     try {
       const createComment = await this.commentService.createComment({
+        authorId,
         text,
         postId, 
         parentId: parentId ?? false,

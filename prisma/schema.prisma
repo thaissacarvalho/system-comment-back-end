@@ -14,6 +14,7 @@ model User {
   createdAt DateTime  @default(now())
   updateAt  DateTime  @updatedAt
   posts     Post[]
+  comments  Comment[]
   likes     Like[]
 }
 
@@ -30,6 +31,8 @@ model Post {
 
 model Comment {
   id        Int       @id @default(autoincrement())
+  authorId Int @unique
+  author    User      @relation(fields: [authorId], references: [id])
   text      String?
   createdAt DateTime  @default(now())
   Post      Post?     @relation(fields: [postId], references: [id])

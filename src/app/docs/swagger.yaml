@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  title: 'System Comment'
+  description: This API allows users, posts, comments, and likes management.
+  version: 1.0.0
+tags:
+  - name: User
+    description: Everything about your Users
+  - name: Post
+    description: Post your posts
+  - name: Comment
+    description: Comment about posts
+  - name: Like
+    description: Give likes or not to posts or comments
+paths:
+  /users:
+    get:
+      tags: 
+        - User
+      summary: Get a list with all users
+      description: Returns all users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - User
+      summary: Create a new user
+      description: Add a new user to the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '201':
+          description: User created successfully
+    patch:
+      tags:
+        - User
+      summary: Modify user information
+      description: Update user information by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        '200':
+          description: User updated successfully
+    delete:
+      tags:
+        - User
+      summary: Delete a user
+      description: Remove a user by ID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: ID of the user to delete
+      responses:
+        '200':
+          description: User deleted successfully
+
+  /users/{id}:
+    get:
+      tags:
+        - User
+      summary: Get user by ID
+      description: Returns a specific user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the user
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /posts:
+    get:
+      tags:
+        - Post
+      summary: Retrieve all posts
+      description: Returns all posts
+      responses:
+        '200':
+          description: A list of posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      tags:
+        - Post
+      summary: Create a post
+      description: Add a new post to the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPost'
+      responses:
+        '201':
+          description: Post created successfully
+
+  /posts/{id}:
+    get:
+      tags:
+        - Post
+      summary: Retrieve a post by ID
+      description: Fetch a specific post using its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the post
+      responses:
+        '200':
+          description: Post retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  /comments:
+    get:
+      tags: 
+      - Comment
+      summary: Get all comments
+      description: Retrieve a list of all comments
+      responses:
+        200:
+          description: A list of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+    post:
+      tags: 
+      - Comment
+      summary: Create a new comment
+      description: Add a new comment to a post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComment'
+      responses:
+        201:
+          description: Comment created successfully
+
+  /comments/{id}:
+    get:
+      tags: 
+      - Comment
+      summary: Get a specific comment
+      description: Retrieve a specific comment by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the comment to retrieve
+      responses:
+        200:
+          description: A specific comment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+    delete:
+      tags: 
+      - Comment
+      summary: Delete a specific comment
+      description: Remove a comment by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the comment to delete
+      responses:
+        204:
+          description: Comment deleted successfully
+  /likes:
+    get:
+      tags: 
+      - Like
+      summary: Get all likes
+      description: Retrieve a list of all likes
+      responses:
+        200:
+          description: A list of likes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Like'
+    post:
+      tags: 
+      - Like
+      summary: Add a like
+      description: Add a like to a post or comment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewLike'
+      responses:
+        201:
+          description: Like added successfully
+
+  /likes/{id}:
+    get:
+      tags: 
+      - Like
+      summary: Get a specific like
+      description: Retrieve a specific like by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the like to retrieve
+      responses:
+        200:
+          description: A specific like
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+    delete:
+      tags: 
+      - Like
+      summary: Remove a specific like
+      description: Remove a like by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the like to delete
+      responses:
+        204:
+          description: Like deleted successfully
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+    NewUser:
+      type: object
+      required:
+        - name
+        - username
+      properties:
+        name:
+          type: string
+        username:
+          type: string
+    UpdateUser:
+      type: object
+      properties:
+        name:
+          type: string
+        username:
+          type: string
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        authorId: 
+          type: integer
+        title:
+          type: string
+        text:
+          type: string
+    NewPost:
+      type: object
+      required:
+        - authorId
+        - title
+        - text
+      properties:
+        authorId: 
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        authorId:
+          type: integer
+        text:
+          type: string
+        postId:
+          type: integer
+        parentId:
+          type: integer
+    NewComment:
+      type: object
+      required: 
+        - authorId
+        - text
+        - postId
+        - parentId
+      properties:
+        authorId: 
+          type: integer
+        text:
+          type: string
+        postId:
+          type: integer
+        parentId:
+          type: integer
+    Like:
+      type: object
+      properties:
+        id:
+          type: integer
+        postId:
+          type: integer
+        commentId:
+          type: integer
+        userId:
+          type: integer
+    NewLike:
+      type: object
+      required: 
+      - commentId
+      - userId
+      - postId
+      properties:
+        postId:
+          type: integer
+        commentId:
+          type: integer
+        userId:
+          type: integer

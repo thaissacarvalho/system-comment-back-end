@@ -16,7 +16,7 @@ const commentController = new CommentController();
 const likeController = new LikeController();
 
 router.get('/', (req, res) => {
-  res.send("What's up, bro?");
+  res.send("API done! Try others path.");
 });
 
 // USERS

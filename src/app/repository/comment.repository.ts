@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export class CommentRepository {
-  async createComment(data: { text: string; postId: number; parentId?: number }) {
+  async createComment(data: { authorId: number, text: string; postId: number; parentId?: number }) {
     return await prisma.comment.create({ data });
   }
 

@@ -3,7 +3,7 @@ import { CommentRepository } from "../repository/comment.repository";
 const commentRepository = new CommentRepository();
 
 export class CommentService {
-  async createComment(data: { text: string; postId: number; parentId?: number }) {
+  async createComment(data: { authorId: number; text: string; postId: number; parentId?: number }) {
     if (!data.text || !data.postId) {
       throw new Error('Text and postId are required');
     }
